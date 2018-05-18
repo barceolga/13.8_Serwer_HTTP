@@ -15,18 +15,18 @@ server.on('request', function (request, response) {
       }
     });
   } else {
-    response.setHeader("Content-Type", "image/jpg");
+    response.setHeader("Content-Type", "text/html; charset=utf-8");
     response.statusCode = 404;
-    fs.readFile("./error.jpg", "base64", function (err, img) {
+    fs.readFile("./error.jpg", function (err, img) {
       if (err) {
         throw err;
       } else {
         //response.write(img);
-        response.write(Buffer.from(img).toString("base64"));
+        response.write('<h1>Wrong path!</h1><img src="data:image/jpg;base64, '+Buffer.from(img).toString("base64")+'">');
         response.end();
       };
     });
   }
-//response.end();
+
 });
-server.listen(9000);
+server.listen(8000);
